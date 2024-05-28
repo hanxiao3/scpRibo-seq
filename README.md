@@ -3,16 +3,17 @@ Blastomeres classification at 2-cell stages
 
 I. Preparation of the input files and other necessary files. (All input files, input.txt, ID_genename, and group_list)
 1) The input file contains the gene names and reads count or RPKM for each sample. The corresponding input.txt file for the input contains the relationship between two blastomeres in an embryo. For example, if p1-5 represent 5 embryos, '_1' and '_2' represent the two blastomeres, then the input.txt file would be:
+
 p1_1	p1_2
 p2_1	p2_2
 p3_1	p3_2
 p4_1	p4_2
 p5_1	p5_2
 
-2) ID_genename
-The first column contains gene IDs, and the second column contains gene names.
+3) ID_genename:The first column contains gene IDs, and the second column contains gene names.
 
-3) group_list: The labels for sample classification. For example, if there are 5 embryos with a total of 10 samples, the group_list would be:
+4) group_list: The labels for sample classification. For example, if there are 5 embryos with a total of 10 samples, the group_list would be:
+   
 Cluster1
 Cluster1
 Cluster1
@@ -25,6 +26,7 @@ Cluster2
 Cluster2
 
 II. Generate the required script and different combinations of blastomeres.
+
 1) perl Random_sampling.pl N Random_sampling.list
 2) perl piliang.ANOVA.r.pl
 3) perl piliang.randomForest.r.pl
@@ -33,6 +35,7 @@ II. Generate the required script and different combinations of blastomeres.
 
 ###Note:
 The Random_sampling.pl file generates all possible combinations of blastomeres. The parameter N is determined by taking 2 raised to the power of (n-1) and then adding 1 (where n is the number of embryos). If n is 5, the command would be:
+
 perl Random_sampling.pl 17 Random_sampling.list
 
 III. Initial screening of differential genes in different blastomere groups, feature selection using random forest (example with 20 repetitions per group), and determination of the optimal combination of blastomeres.
