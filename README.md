@@ -5,9 +5,13 @@ I. Preparation of the input files and other necessary files. (All input files, i
 1) The input file contains the gene names and reads count or RPKM for each sample. The corresponding input.txt file for the input contains the relationship between two blastomeres in an embryo. For example, if p1-5 represent 5 embryos, '_1' and '_2' represent the two blastomeres, then the input.txt file would be:
 
 p1_1	p1_2
+
 p2_1	p2_2
+
 p3_1	p3_2
+
 p4_1	p4_2
+
 p5_1	p5_2
 
 3) ID_genename:The first column contains gene IDs, and the second column contains gene names.
@@ -15,14 +19,23 @@ p5_1	p5_2
 4) group_list: The labels for sample classification. For example, if there are 5 embryos with a total of 10 samples, the group_list would be:
    
 Cluster1
+
 Cluster1
+
 Cluster1
+
 Cluster1
+
 Cluster1
+
 Cluster2
+
 Cluster2
+
 Cluster2
+
 Cluster2
+
 Cluster2
 
 II. Generate the required script and different combinations of blastomeres.
