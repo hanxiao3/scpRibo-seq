@@ -1,7 +1,7 @@
 # scpRibo-seq
 Blastomeres classification at 2-cell stages
 
-I. Preparation of the input files and other necessary files. (All input files, input.txt, ID_genename, and group_list)
+I. Preparation of the input files and other necessary files. (All input files, input.txt, ID_genename, group_list, hashmatch.pl, and merge.pl)
 1) The input file contains the gene names and reads count or RPKM for each sample. The corresponding input.txt file for the input contains the relationship between two blastomeres in an embryo. For example, if p1-5 represent 5 embryos, '_1' and '_2' represent the two blastomeres, then the input.txt file would be:
 
 p1_1	p1_2
