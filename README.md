@@ -25,11 +25,11 @@ Cluster2
 Cluster2
 
 2. Generate the required script and different combinations of blastomeres.
-perl Random_sampling.pl N Random_sampling.list
-perl piliang.ANOVA.r.pl
-perl piliang.randomForest.r.pl
-perl piliang.heatmap.r.pl
-perl piliang.wilcox.r.pl
+1) perl Random_sampling.pl N Random_sampling.list
+2) perl piliang.ANOVA.r.pl
+3) perl piliang.randomForest.r.pl
+4) perl piliang.heatmap.r.pl
+5) perl piliang.wilcox.r.pl
 
 ###Note:
 The Random_sampling.pl file generates all possible combinations of blastomeres. The parameter N is determined by taking 2 raised to the power of (n-1) and then adding 1 (where n is the number of embryos). If n is 5, the command would be:
