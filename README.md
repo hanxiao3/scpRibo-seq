@@ -41,7 +41,7 @@ perl Random_sampling.pl 17 Random_sampling.list
 III. Initial screening of differential genes in different blastomere groups, feature selection using random forest (example with 20 repetitions per group), and determination of the optimal combination of blastomeres.
 The code uses 10 samples from 5 embryos as an example.
 
-perl piliang.all.pl
+perl All.pl
 
 ###Note:
 Intermediate statistical files generated during the calculation process can aid in data evaluation. After the calculation is completed, merge the Standard_test.result files from each group to select the optimal group. To obtain stable results, it is recommended to repeat the above steps at least 100 times in batches(depending on the number of embryos and samples).
