@@ -43,7 +43,7 @@ do
   input_file=\"./randomForest/ANOVA.p0.05.randomForest\${i}.input.importance.xls\"
   output_file=\"randomForest\${i}\"
 
-  sed '1d' \$input_file | sed 's/ /\\t/g' | cut -f1-4 | sed 's/\"//g' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1\"\\t\"\$4}' > \$output_file
+  sed '1d' \$input_file | sed 's/ /\\t/g' | cut -f1-4 | sed 's/\"//g' | awk 'BEGIN{OFS=FS=\"\\t\"} {printf \"%s\\t%s\\t%s\\t%.20f\\n\", \$1, \$2, \$3, \$4}'| sort -k4,4nr | head -30 | awk '\$4>0 {print \$1\"\\t\"\$4}' > \$output_file
 done
 
 
@@ -62,7 +62,7 @@ sed '1d' merge.randomForest20s | wc -l |  awk '{print \"RamdomForest_total\"\"\\
 cd \${data}/$name
 
 for i in {1..20}; do
-  less -S ./randomForest/ANOVA.p0.05.randomForest\${i}.input.importance.xls | sed 's/ /\\t/g'| cut -f1-4 | sed 's/\"//g' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1}' >> a1
+  less -S ./randomForest/ANOVA.p0.05.randomForest\${i}.input.importance.xls | sed 's/ /\\t/g'| cut -f1-4 | sed 's/\"//g'| awk 'BEGIN{OFS=FS=\"\\t\"} {printf \"%s\\t%s\\t%s\\t%.20f\\n\", \$1, \$2, \$3, \$4}' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1}' >> a1
 done
 
 sort a1| uniq -c |awk '{sub(/^ */,\"\");sub(/ *\$/,\"\")}1' | sed 's/ /\\t/g' | awk '{print \$2\"\\t\"\$1}'| sort -k2,2rn > randomForest.gene_frequency
