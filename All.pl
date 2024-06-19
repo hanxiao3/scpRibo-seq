@@ -24,10 +24,10 @@ cd \${data}/shell.ANOVA
 Rscript $name.R
 
 cd \${data}/$name
-awk '\$13<0.05' ANOVA.out| cut -f1-11 | sed '1i ID\\t$2'| sed 's/,/\\t/g'>  ANOVA.p0.01
-sed '\$a\\type\\tA\\tA\\tA\\tA\\tA\\tB\\tB\\tB\\tB\\tB' ANOVA.p0.01|awk '!/^\$/'| awk '{for(i=1;i<=NF;i++){a[FNR,i]=\$i}}END{for(i=1;i<=NF;i++){for(j=1;j<=FNR;j++){printf a[j,i]\" \"}print \"\"}}'  | sed 's/ /\\t/g' | sed 's/\\r//g' | sed 's/[ \\t]*\$//g'> ANOVA.p0.01.randomForest.input
+awk '\$13<0.05' ANOVA.out| cut -f1-11 | sed '1i ID\\t$2'| sed 's/,/\\t/g'>  ANOVA.p0.05
+sed '\$a\\type\\tA\\tA\\tA\\tA\\tA\\tB\\tB\\tB\\tB\\tB' ANOVA.p0.05|awk '!/^\$/'| awk '{for(i=1;i<=NF;i++){a[FNR,i]=\$i}}END{for(i=1;i<=NF;i++){for(j=1;j<=FNR;j++){printf a[j,i]\" \"}print \"\"}}'  | sed 's/ /\\t/g' | sed 's/\\r//g' | sed 's/[ \\t]*\$//g'> ANOVA.p0.05.randomForest.input
 rm ANOVA.a 
-sed '1d' ANOVA.p0.01 | wc -l | awk '{print \"ANOVA\"\"\\t\"\$0}'> filter.genecount
+sed '1d' ANOVA.p0.05 | wc -l | awk '{print \"ANOVA\"\"\\t\"\$0}'> filter.genecount
 
 ###3-Feature selection using random forest (example with 20 repetitions per group)
 ###Select the top 30 significant feature genes for downstream analysis. This parameter can be adjusted.
@@ -40,7 +40,7 @@ Rscript $name.R
 cd \${data}/$name
 for i in {1..20} #replace n with the total number of samples you have
 do
-  input_file=\"./randomForest/ANOVA.p0.01.randomForest\${i}.input.importance.xls\"
+  input_file=\"./randomForest/ANOVA.p0.05.randomForest\${i}.input.importance.xls\"
   output_file=\"randomForest\${i}\"
 
   sed '1d' \$input_file | sed 's/ /\\t/g' | cut -f1-4 | sed 's/\"//g' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1\"\\t\"\$4}' > \$output_file
@@ -62,7 +62,7 @@ sed '1d' merge.randomForest20s | wc -l |  awk '{print \"RamdomForest_total\"\"\\
 cd \${data}/$name
 
 for i in {1..20}; do
-  less -S ./randomForest/ANOVA.p0.01.randomForest\${i}.input.importance.xls | sed 's/ /\\t/g'| cut -f1-4 | sed 's/\"//g' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1}' >> a1
+  less -S ./randomForest/ANOVA.p0.05.randomForest\${i}.input.importance.xls | sed 's/ /\\t/g'| cut -f1-4 | sed 's/\"//g' | sort -k4,4nr | head -30 | awk '\$4>0 {print \$1}' >> a1
 done
 
 sort a1| uniq -c |awk '{sub(/^ */,\"\");sub(/ *\$/,\"\")}1' | sed 's/ /\\t/g' | awk '{print \$2\"\\t\"\$1}'| sort -k2,2rn > randomForest.gene_frequency
@@ -78,7 +78,7 @@ rm a1 a2 a3  head randomForest1 randomForest2 randomForest3 randomForest4 random
 less -S randomForest.freq_over5.MDA | wc -l | awk '{print \"RamdomForest_freq_over5\"\"\\t\"\$0}' >> filter.genecount
 cat randomForest.freq_over5.MDA|awk '{sum+=\$2} END {print \"Average\"\"\\t\"sum/NR}' > MDA.mean.median
 
-cut -f1 randomForest.freq_over5.MDA | awk '{if(NR==FNR){a[\$1]}else if(\$1 in a)print \$0}' -  ANOVA.p0.01 |  sed '1i ID\\t$2' | sed 's/,/\\t/g'> randomForest.freq_over5.MDA.finaltrans_RPKM
+cut -f1 randomForest.freq_over5.MDA | awk '{if(NR==FNR){a[\$1]}else if(\$1 in a)print \$0}' -  ANOVA.p0.05 |  sed '1i ID\\t$2' | sed 's/,/\\t/g'> randomForest.freq_over5.MDA.finaltrans_RPKM
 perl hashmatch.txt -a ID_genename -b randomForest.freq_over5.MDA.finaltrans_RPKM -o a1
 cut -f1,3-12 a1|  sed '1i ID\\t$2' | sed 's/,/\\t/g'>  randomForest.freq_over5.MDA.genename.finaltrans_RPKM
 rm a1
