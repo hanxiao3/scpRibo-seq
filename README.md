@@ -44,5 +44,6 @@ The code uses 10 samples from 5 embryos as an example.
 perl All.pl
 
 ###Note:
-Intermediate statistical files generated during the calculation process can aid in data evaluation. After the calculation is completed, merge the Standard_test.result files from each group to select the optimal group. To obtain stable results, it is recommended to repeat the above steps at least 100 times in batches(depending on the number of embryos and samples).
+1. Intermediate statistical files generated during the calculation process can aid in data evaluation. After the calculation is completed, merge the Standard_test.result files from each group to select the optimal group. To obtain stable results, it is recommended to repeat the above steps at least 100 times in batches(depending on the number of embryos and samples).
+2. Adjustable parameters in the script include: the significance p-value for ANOVA to preliminarily screen potential differential genes, the number of top significant genes selected in each round of feature calculation, MDA value, pearson correlation coefficient within and between groups, and the number of feature items with actual significant differences (p < 0.05).
 
